@@ -13,6 +13,11 @@
 			<classifier name="G"/>
 			<classifier name="H"/>
 		</enum>
+		<enum name="Prioritaet">
+			<classifier name="minor"/>
+			<classifier name="major"/>
+			<classifier name="critical"/>
+		</enum>
 		<class name="Wohnung">
 			<generalizations>
 				<generalization type="tl.model:TLObject"/>
@@ -52,6 +57,33 @@
 				/>
 				<property name="bezeichnung"
 					type="tl.core:String"
+				/>
+				<reference name="vorteile"
+					kind="forwards"
+					multiple="true"
+					navigate="true"
+					type="Wohnungsmerkmal"
+				/>
+				<reference name="nachteile"
+					kind="forwards"
+					multiple="true"
+					navigate="true"
+					type="Wohnungsmerkmal"
+				/>
+			</attributes>
+		</class>
+		<class name="Wohnungsmerkmal">
+			<generalizations>
+				<generalization type="tl.model:TLObject"/>
+			</generalizations>
+			<attributes>
+				<property name="bezeichnung"
+					type="tl.core:String"
+				/>
+				<reference name="prioritaet"
+					kind="forwards"
+					navigate="true"
+					type="Prioritaet"
 				/>
 			</attributes>
 		</class>
