@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<model xmlns="http://www.top-logic.com/ns/dynamic-types/6.0">
+	<module name="Budget">
+		<enum name="Energieklasse">
+			<classifier name="APlus"/>
+			<classifier name="A"/>
+			<classifier name="B"/>
+			<classifier name="C"/>
+			<classifier name="D"/>
+			<classifier name="E"/>
+			<classifier name="F"/>
+			<classifier name="G"/>
+			<classifier name="H"/>
+		</enum>
+		<class name="Wohnung">
+			<generalizations>
+				<generalization type="tl.model:TLObject"/>
+			</generalizations>
+			<attributes>
+				<property name="url"
+					type="tl.core:String"
+				>
+					<annotations>
+						<size-constraint upper-bound="10000"/>
+					</annotations>
+				</property>
+				<property name="kaltmiete"
+					type="tl.core:Integer"
+				/>
+				<property name="adresse"
+					type="tl.core:String"
+				/>
+				<property name="flaeche"
+					type="tl.core:Integer"
+				/>
+				<property name="nebenkosten"
+					type="tl.core:Integer"
+				/>
+				<property name="zzglHeizkosten"
+					type="tl.core:Boolean"
+				/>
+				<property name="energiebedarf"
+					type="tl.core:Integer"
+				/>
+				<property name="zimmer"
+					type="tl.core:Integer"
+				/>
+				<reference name="energieklasse"
+					kind="forwards"
+					type="Energieklasse"
+				/>
+				<property name="bezeichnung"
+					type="tl.core:String"
+				/>
+			</attributes>
+		</class>
+	</module>
+</model>
