@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config:template-call
+	xmlns:config="http://www.top-logic.com/ns/config/6.0"
+	final="true"
+	template="com.top_logic/tab.template.xml"
+>
+	<arguments
+		helpID=""
+		tabIcon="css:fas fa-home"
+	>
+		<tabLabel key="dynamic.83625d30-0184-45d4-8b3f-d9ec5d0f4ade">
+			<de>Wohnung</de>
+		</tabLabel>
+		<components>
+			<layout-reference resource="budget/wohnung/innerLayout.layout.xml"/>
+		</components>
+	</arguments>
+</config:template-call>

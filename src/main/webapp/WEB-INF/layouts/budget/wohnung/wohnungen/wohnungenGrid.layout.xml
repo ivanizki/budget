@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config:template-call
+	xmlns:config="http://www.top-logic.com/ns/config/6.0"
+	final="true"
+	template="com.top_logic.element/grid.template.xml"
+>
+	<arguments
+		defaultColumns="bezeichnung,kaltmiete,zimmeranzahl,flaeche,nebenkosten,zzglHeizkosten,adresse,energieklasse,energiebedarf,vorteile,nachteile,url"
+		fixedColumns="4"
+		type="Budget:Wohnung"
+	>
+		<name key="dynamic.b645ec1d-296b-4332-82c9-ddcf9b2cd07a">
+			<de>Wohnungen</de>
+		</name>
+		<modelBuilder class="com.top_logic.model.search.providers.ListModelByExpression"
+			elements="model->all(`Budget:Wohnung`)"
+			supportsElement="element->$element.instanceOf(`Budget:Wohnung`)"
+		/>
+		<buttons>
+			<button id="exportExcelGrid"
+				class="com.top_logic.layout.table.export.StreamingExcelExportHandler"
+			/>
+			<button id="createRow"
+				class="com.top_logic.model.search.providers.GridCreateHandlerByExpression"
+			>
+				<checkScopeProvider/>
+				<type-options
+					include-subtypes="false"
+					type="Budget:Wohnung"
+				/>
+			</button>
+			<button id="deleteRow"
+				class="com.top_logic.layout.component.GenericDeleteCommandHandler"
+				target="selection(self())"
+			/>
+		</buttons>
+	</arguments>
+</config:template-call>
