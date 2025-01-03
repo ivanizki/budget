@@ -48,7 +48,7 @@
 				<property name="energiebedarf"
 					type="tl.core:Integer"
 				/>
-				<property name="zimmer"
+				<property name="zimmeranzahl"
 					type="tl.core:Integer"
 				/>
 				<reference name="energieklasse"
