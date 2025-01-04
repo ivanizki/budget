@@ -10,6 +10,7 @@
 			<layout-reference resource="budget/wohnung/wohnungen/tabLayout.layout.xml"/>
 			<layout-reference resource="budget/wohnung/wohnungsmerkmale/tabLayout.layout.xml"/>
 			<layout-reference resource="budget/wohnung/wohnungsanbieter/tabLayout.layout.xml"/>
+			<layout-reference resource="budget/wohnung/anbietertricks/tabLayout.layout.xml"/>
 		</components>
 	</arguments>
 </config:template-call>

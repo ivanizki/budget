@@ -18,6 +18,21 @@
 			<classifier name="major"/>
 			<classifier name="critical"/>
 		</enum>
+		<class name="Anbietertrick">
+			<generalizations>
+				<generalization type="tl.model:TLObject"/>
+			</generalizations>
+			<attributes>
+				<property name="bezeichnung"
+					type="tl.core:String"
+				/>
+				<reference name="prioritaet"
+					kind="forwards"
+					navigate="true"
+					type="Prioritaet"
+				/>
+			</attributes>
+		</class>
 		<class name="Wohnung">
 			<generalizations>
 				<generalization type="tl.model:TLObject"/>
@@ -73,6 +88,17 @@
 				<property name="aktiv"
 					mandatory="true"
 					type="tl.core:Boolean"
+				/>
+				<reference name="anbietertricks"
+					kind="forwards"
+					multiple="true"
+					navigate="true"
+					type="Anbietertrick"
+				/>
+				<reference name="anbieter"
+					kind="forwards"
+					navigate="true"
+					type="Wohnungsanbieter"
 				/>
 			</attributes>
 		</class>

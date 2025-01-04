@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config:template-call
+	xmlns:config="http://www.top-logic.com/ns/config/6.0"
+	final="true"
+	template="com.top_logic/tab.template.xml"
+>
+	<arguments helpID="">
+		<tabLabel key="dynamic.f75ce9a3-9e07-4e51-9ccb-7e7d5b9e1c5f">
+			<de>Anbietertricks</de>
+		</tabLabel>
+		<components>
+			<layout-reference resource="budget/wohnung/anbietertricks/innerLayout.layout.xml"/>
+		</components>
+	</arguments>
+</config:template-call>

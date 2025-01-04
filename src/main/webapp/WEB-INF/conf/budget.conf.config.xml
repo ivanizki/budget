@@ -27,6 +27,18 @@
 					>
 						<implementation class="ivanizki.budget.WohnungsmerkmalResourceProvider"/>
 					</provider>
+					<provider
+						kind="MODEL"
+						type="Budget:Wohnungsanbieter"
+					>
+						<implementation class="ivanizki.budget.WohnungsanbieterResourceProvider"/>
+					</provider>
+					<provider
+						kind="MODEL"
+						type="Budget:Anbietertrick"
+					>
+						<implementation class="ivanizki.budget.WohnungsmerkmalResourceProvider"/>
+					</provider>
 				</resource-providers>
 			</instance>
 		</config>
