@@ -120,6 +120,22 @@
 					mandatory="true"
 					type="tl.core:String"
 				/>
+				<property name="wahrheitswert"
+					type="tl.core:Double"
+				>
+					<annotations>
+						<storage-algorithm>
+							<query>
+								<expr><![CDATA[anbieter->{
+scala = 5;
+wohnungen = $anbieter.referers(`Budget:Wohnung#anbieter`);
+summe = $wohnungen.get(`Budget:Wohnung#anbietertricks`).map(tricks->max(0,$scala-$tricks.size())).sum()/$scala;
+$summe/$wohnungen.size();
+}]]></expr>
+							</query>
+						</storage-algorithm>
+					</annotations>
+				</property>
 			</attributes>
 		</class>
 		<class name="Wohngesellschaft">
@@ -133,6 +149,16 @@
 					navigate="true"
 					type="Wohnungsanbieter"
 				/>
+				<property name="wahrheitswert"
+					override="true"
+					type="tl.core:Double"
+				>
+					<annotations>
+						<storage-algorithm>
+							<query expr="gesellschaft->$gesellschaft.get(`Budget:Wohngesellschaft#mitarbeiter`).map(mitarbeiter->$mitarbeiter.get(`Budget:Wohnungsanbieter#wahrheitswert`)).average()"/>
+						</storage-algorithm>
+					</annotations>
+				</property>
 			</attributes>
 		</class>
 		<class name="Wohnungsmerkmal">

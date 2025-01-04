@@ -6,7 +6,7 @@
 	template="com.top_logic.element/grid.template.xml"
 >
 	<arguments
-		defaultColumns="name,tType,mitarbeiter"
+		defaultColumns="name,tType,mitarbeiter,wahrheitswert"
 		type="Budget:Wohnungsanbieter"
 	>
 		<name key="dynamic.7900b8c1-521c-476b-9fa3-79c968b40f78">
