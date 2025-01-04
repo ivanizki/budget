@@ -17,6 +17,20 @@
 				</modules>
 			</instance>
 		</config>
+	
+		<config service-class="com.top_logic.layout.provider.LabelProviderService">
+			<instance class="com.top_logic.layout.provider.LabelProviderService">
+				<resource-providers>
+					<provider
+						kind="MODEL"
+						type="Budget:Wohnungsmerkmal"
+					>
+						<implementation class="ivanizki.budget.WohnungsmerkmalResourceProvider"/>
+					</provider>
+				</resource-providers>
+			</instance>
+		</config>
+		
 	</services>
 
 	<configs>

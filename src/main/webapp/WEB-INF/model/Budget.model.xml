@@ -70,6 +70,34 @@
 					navigate="true"
 					type="Wohnungsmerkmal"
 				/>
+				<property name="aktiv"
+					mandatory="true"
+					type="tl.core:Boolean"
+				/>
+			</attributes>
+		</class>
+		<class name="Wohnungsanbieter">
+			<generalizations>
+				<generalization type="tl.model:TLObject"/>
+			</generalizations>
+			<attributes>
+				<property name="name"
+					mandatory="true"
+					type="tl.core:String"
+				/>
+			</attributes>
+		</class>
+		<class name="Wohngesellschaft">
+			<generalizations>
+				<generalization type="Wohnungsanbieter"/>
+			</generalizations>
+			<attributes>
+				<reference name="mitarbeiter"
+					kind="forwards"
+					multiple="true"
+					navigate="true"
+					type="Wohnungsanbieter"
+				/>
 			</attributes>
 		</class>
 		<class name="Wohnungsmerkmal">

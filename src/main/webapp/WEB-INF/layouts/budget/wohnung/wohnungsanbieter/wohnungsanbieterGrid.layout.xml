@@ -6,18 +6,15 @@
 	template="com.top_logic.element/grid.template.xml"
 >
 	<arguments
-		defaultColumns="bezeichnung,prioritaet"
-		type="Budget:Wohnungsmerkmal"
+		defaultColumns="name,tType,mitarbeiter"
+		type="Budget:Wohnungsanbieter"
 	>
-		<name key="dynamic.4ef679ca-4a11-43c9-8222-2729bb36fcac">
-			<de>Wohnungsmerkmale</de>
+		<name key="dynamic.7900b8c1-521c-476b-9fa3-79c968b40f78">
+			<de>Wohnungsanbieter</de>
 		</name>
-		<configurationProviders>
-			<configurationProvider class="ivanizki.budget.WohnungsmerkmalTableConfigurationProvider"/>
-		</configurationProviders>
 		<modelBuilder class="com.top_logic.model.search.providers.ListModelByExpression"
-			elements="model->all(`Budget:Wohnungsmerkmal`)"
-			supportsElement="element->$element.instanceOf(`Budget:Wohnungsmerkmal`)"
+			elements="model->all(`Budget:Wohnungsanbieter`)"
+			supportsElement="element->$element.instanceOf(`Budget:Wohnungsanbieter`)"
 		/>
 		<buttons>
 			<button id="exportExcelGrid"
@@ -28,8 +25,8 @@
 			>
 				<checkScopeProvider/>
 				<type-options
-					include-subtypes="false"
-					type="Budget:Wohnungsmerkmal"
+					include-subtypes="true"
+					type="Budget:Wohnungsanbieter"
 				/>
 			</button>
 			<button id="deleteRow"

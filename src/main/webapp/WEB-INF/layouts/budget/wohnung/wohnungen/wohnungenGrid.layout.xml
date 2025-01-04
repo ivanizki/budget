@@ -6,13 +6,16 @@
 	template="com.top_logic.element/grid.template.xml"
 >
 	<arguments
-		defaultColumns="bezeichnung,kaltmiete,zimmeranzahl,flaeche,nebenkosten,zzglHeizkosten,adresse,energieklasse,energiebedarf,vorteile,nachteile,url"
+		defaultColumns="aktiv,bezeichnung,kaltmiete,zimmeranzahl,flaeche,nebenkosten,zzglHeizkosten,adresse,energieklasse,energiebedarf,vorteile,nachteile,url"
 		fixedColumns="4"
 		type="Budget:Wohnung"
 	>
 		<name key="dynamic.b645ec1d-296b-4332-82c9-ddcf9b2cd07a">
 			<de>Wohnungen</de>
 		</name>
+		<configurationProviders>
+			<configurationProvider class="ivanizki.budget.WohnungTableConfigurationProvider"/>
+		</configurationProviders>
 		<modelBuilder class="com.top_logic.model.search.providers.ListModelByExpression"
 			elements="model->all(`Budget:Wohnung`)"
 			supportsElement="element->$element.instanceOf(`Budget:Wohnung`)"
