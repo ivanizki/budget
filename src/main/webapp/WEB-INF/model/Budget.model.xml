@@ -127,9 +127,9 @@
 						<storage-algorithm>
 							<query>
 								<expr><![CDATA[anbieter->{
-scala = 5;
+scale = 5;
 wohnungen = $anbieter.referers(`Budget:Wohnung#anbieter`);
-summe = $wohnungen.get(`Budget:Wohnung#anbietertricks`).map(tricks->max(0,$scala-$tricks.size())).sum()/$scala;
+summe = $wohnungen.map(wohnung->max(0,$scale-$wohnung.get(`Budget:Wohnung#anbietertricks`).size())).sum()/$scale;
 $summe/$wohnungen.size();
 }]]></expr>
 							</query>
