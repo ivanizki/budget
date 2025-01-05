@@ -130,7 +130,7 @@
 scale = 5;
 wohnungen = $anbieter.referers(`Budget:Wohnung#anbieter`);
 summe = $wohnungen.map(wohnung->max(0,$scale-$wohnung.get(`Budget:Wohnung#anbietertricks`).size())).sum()/$scale;
-$summe/$wohnungen.size();
+if($wohnungen.size()==0,null,$summe/$wohnungen.size());
 }]]></expr>
 							</query>
 						</storage-algorithm>
