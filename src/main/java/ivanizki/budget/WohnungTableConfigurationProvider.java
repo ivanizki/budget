@@ -34,13 +34,32 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 		adaptWidth(table, "flaeche", "F", "Fläche");
 		adaptWidth(table, "energieklasse", "E", "Energieklasse");
 		
+		declareFlaecheProZimmerColumn(table);
 		declareJahresenergiebedarfColumn(table);
 	}
 
+	private void declareFlaecheProZimmerColumn(TableConfiguration table) {
+		ColumnConfiguration column = table.declareColumn("flaecheProZimmer");
+		adaptWidth(table, "flaecheProZimmer", "F/Z", "Fläche pro Zimmer");
+		column.setCellStyle("text-align: right;");
+		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
+
+			@Override
+			public Object getValue(TLObject wohnung, String property) {
+				if (wohnung == null || wohnung instanceof NewObject) {
+					return null;
+				}
+				Integer z = zimmeranzahl(wohnung);
+				return z == null ? null : flaeche(wohnung) / z;
+			}
+		});
+	}
+
 	private void declareJahresenergiebedarfColumn(TableConfiguration table) {
-		ColumnConfiguration je = table.declareColumn("jahresenergiebedarf");
+		ColumnConfiguration column = table.declareColumn("jahresenergiebedarf");
 		adaptWidth(table, "jahresenergiebedarf", "JE", "Jahresenergiebedarf");
-		je.setAccessor(new ReadOnlyAccessor<TLObject>() {
+		column.setCellStyle("text-align: right;");
+		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
 
 			@Override
 			public Object getValue(TLObject wohnung, String property) {
@@ -84,14 +103,21 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 				}
 				return energyExtrapolation;
 			}
-			
-			private Integer flaeche(TLObject wohnung) {
-				if (wohnung != null) {
-					return (Integer) wohnung.tValueByName("flaeche");
-				}
-				return 0;
-			}
 		});
+	}
+
+	private Integer flaeche(TLObject wohnung) {
+		if (wohnung != null) {
+			return (Integer) wohnung.tValueByName("flaeche");
+		}
+		return 0;
+	}
+
+	private Integer zimmeranzahl(TLObject wohnung) {
+		if (wohnung != null) {
+			return (Integer) wohnung.tValueByName("zimmeranzahl");
+		}
+		return 0;
 	}
 
 	private void adaptWidth(TableConfiguration table, String name, String label, String tooltip) {
