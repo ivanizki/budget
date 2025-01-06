@@ -3,6 +3,7 @@ package ivanizki.budget;
 import com.top_logic.element.layout.grid.NewObject;
 import com.top_logic.layout.ReadOnlyAccessor;
 import com.top_logic.layout.table.model.ColumnConfiguration;
+import com.top_logic.layout.table.model.ColumnContainer;
 import com.top_logic.layout.table.model.NoDefaultColumnAdaption;
 import com.top_logic.layout.table.model.TableConfiguration;
 import com.top_logic.model.TLClassifier;
@@ -24,23 +25,34 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 	@Override
 	public void adaptConfigurationTo(TableConfiguration table) {
 		adaptWidth(table, "aktiv", "A", "Aktiv");
-		table.getDeclaredColumn("bezeichnung").setDefaultColumnWidth("250px");
+		table.getDeclaredColumn("bezeichnung").setDefaultColumnWidth("150px");
 		table.getDeclaredColumn("adresse").setDefaultColumnWidth("250px");
-		adaptWidth(table, "miete", "Miete", "Miete", "75px");
-		adaptWidth(table, "kaltmiete", "Kalt", "Kaltmiete", "75px");
-		adaptWidth(table, "nebenkosten", "NK", "Nebenkosten", "75px");
-		adaptWidth(table, "zimmeranzahl", "Z", "Zimmeranzahl");
-		adaptWidth(table, "zzglHeizkosten", "+", "zzgl. Heizkosten");
-		adaptWidth(table, "flaeche", "F", "Fläche");
-		adaptWidth(table, "energieklasse", "E", "Energieklasse");
-		
-		declareFlaecheProZimmerColumn(table);
-		declareJahresenergiebedarfColumn(table);
+
+		declareMietkostenColumnGroup(table);
+		declareSchnittColumnGroup(table);
+		declareEnergieColumnGroup(table);
 	}
 
-	private void declareFlaecheProZimmerColumn(TableConfiguration table) {
-		ColumnConfiguration column = table.declareColumn("flaecheProZimmer");
-		adaptWidth(table, "flaecheProZimmer", "F/Z", "Fläche pro Zimmer");
+	private void declareMietkostenColumnGroup(TableConfiguration table) {
+		ColumnConfiguration group = table.declareColumn("mietkosten");
+		group.setColumnLabel("Mietkosten");
+		group.addColumn(adaptWidth(table, "miete", "Miete", "Miete", "75px"));
+		group.addColumn(adaptWidth(table, "kaltmiete", "Kalt", "Kaltmiete", "75px"));
+		group.addColumn(adaptWidth(table, "nebenkosten", "NK", "Nebenkosten", "75px"));
+		group.addColumn(adaptWidth(table, "zzglHeizkosten", "+", "zzgl. Heizkosten"));
+	}
+
+	private void declareSchnittColumnGroup(TableConfiguration table) {
+		ColumnConfiguration group = table.declareColumn("schnitt");
+		group.setColumnLabel("Schnitt");
+		group.addColumn(adaptWidth(table, "zimmeranzahl", "Z", "Zimmeranzahl"));
+		declareFlaecheProZimmerColumn(group);
+		group.addColumn(adaptWidth(table, "flaeche", "F", "Fläche [m2]"));
+	}
+
+	private ColumnConfiguration declareFlaecheProZimmerColumn(ColumnContainer<?> container) {
+		ColumnConfiguration column = container.declareColumn("flaecheProZimmer");
+		adaptWidth(container, "flaecheProZimmer", "F/Z", "Fläche pro Zimmer [m2]");
 		column.setCellStyle("text-align: right;");
 		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
 
@@ -53,11 +65,22 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 				return z == null ? null : flaeche(wohnung) / z;
 			}
 		});
+		return column;
 	}
 
-	private void declareJahresenergiebedarfColumn(TableConfiguration table) {
-		ColumnConfiguration column = table.declareColumn("jahresenergiebedarf");
-		adaptWidth(table, "jahresenergiebedarf", "JE", "Jahresenergiebedarf");
+	private void declareEnergieColumnGroup(TableConfiguration table) {
+		ColumnConfiguration group = table.declareColumn("energie");
+		group.setColumnLabel("Energie");
+		declareJahresenergiebedarfColumn(group);
+		ColumnConfiguration energieklasse = adaptWidth(table, "energieklasse", "EK", "Effizienzklasse");
+		energieklasse.setCellStyle("text-align: center;");
+		group.addColumn(energieklasse);
+		group.addColumn(adaptWidth(table, "energiebedarf", "JE/F", "Energiebedarf [kWh/m2]", "65px"));
+	}
+
+	private ColumnConfiguration declareJahresenergiebedarfColumn(ColumnContainer<?> container) {
+		ColumnConfiguration column = container.declareColumn("jahresenergiebedarf");
+		adaptWidth(container, "jahresenergiebedarf", "JE", "Jahresenergiebedarf [kWh]");
 		column.setCellStyle("text-align: right;");
 		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
 
@@ -104,6 +127,7 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 				return energyExtrapolation;
 			}
 		});
+		return column;
 	}
 
 	private Integer flaeche(TLObject wohnung) {
@@ -120,19 +144,20 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 		return 0;
 	}
 
-	private void adaptWidth(TableConfiguration table, String name, String label, String tooltip) {
+	private ColumnConfiguration adaptWidth(ColumnContainer<?> container, String name, String label, String tooltip) {
 		String columnWidth = new StringBuilder()
 			.append(COLUMN_HEADER_LEFT_WIDTH + label.length() * COLUMN_HEADER_LETTER_WIDTH + COLUMN_HEADER_RIGHT_WIDTH)
 			.append("px")
 			.toString();
-		adaptWidth(table, name, label, tooltip, columnWidth);
+		return adaptWidth(container, name, label, tooltip, columnWidth);
 	}
 
-	private void adaptWidth(TableConfiguration table, String name, String label, String tooltip, String columnWidth) {
-		ColumnConfiguration costColumn = table.getDeclaredColumn(name);
-		costColumn.setDefaultColumnWidth(columnWidth);
-		costColumn.setColumnLabel(label);
+	private ColumnConfiguration adaptWidth(ColumnContainer<?> container, String name, String label, String tooltip, String columnWidth) {
+		ColumnConfiguration column = container.getDeclaredColumn(name);
+		column.setDefaultColumnWidth(columnWidth);
+		column.setColumnLabel(label);
 		/** TODO add tooltip */
+		return column;
 	}
 
 }
