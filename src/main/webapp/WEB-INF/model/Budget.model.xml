@@ -115,6 +115,9 @@
 			<generalizations>
 				<generalization type="tl.model:TLObject"/>
 			</generalizations>
+			<annotations>
+				<main-properties properties="name,wahrheitswert"/>
+			</annotations>
 			<attributes>
 				<property name="name"
 					mandatory="true"
