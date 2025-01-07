@@ -33,6 +33,25 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 		declareMietkostenColumnGroup(table);
 		declareSchnittColumnGroup(table);
 		declareEnergieColumnGroup(table);
+
+		declareWahrheitswertColumn(table);
+	}
+
+	private ColumnConfiguration declareWahrheitswertColumn(TableConfiguration table) {
+		ColumnConfiguration column = table.declareColumn("wahrheitswert");
+		adaptWidth(table, "wahrheitswert", "T", "Wahrheitswert");
+		column.setCellStyle("text-align: right;");
+		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
+			@Override
+			public Object getValue(TLObject wohnung, String property) {
+				if (wohnung == null || wohnung instanceof NewObject) {
+					return null;
+				}
+				TLObject anbieter = (TLObject) wohnung.tValueByName("anbieter");
+				return anbieter == null ? null : anbieter.tValueByName("wahrheitswert");
+			}
+		});
+		return column;
 	}
 
 	private ColumnConfiguration declareGesamtkostenColumn(TableConfiguration table) {
@@ -40,7 +59,6 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 		adaptWidth(table, "gesamtkosten", "GK", "Gesamtkosten");
 		column.setCellStyle("text-align: right;");
 		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
-
 			@Override
 			public Object getValue(TLObject wohnung, String property) {
 				if (wohnung == null || wohnung instanceof NewObject) {
