@@ -1,5 +1,8 @@
 package ivanizki.budget;
 
+import java.util.Collection;
+
+import com.top_logic.basic.CollectionUtil;
 import com.top_logic.element.layout.grid.NewObject;
 import com.top_logic.layout.ReadOnlyAccessor;
 import com.top_logic.layout.table.model.ColumnConfiguration;
@@ -35,6 +38,29 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 		declareEnergieColumnGroup(table);
 
 		declareWahrheitswertColumn(table);
+
+		declareValue1Column(table);
+	}
+
+	private ColumnConfiguration declareValue1Column(TableConfiguration table) {
+		ColumnConfiguration column = table.declareColumn("value1");
+		adaptWidth(table, "value1", "V1", "value1");
+		column.setCellStyle("text-align: right;");
+		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
+			@Override
+			public Object getValue(TLObject wohnung, String property) {
+				if (wohnung == null || wohnung instanceof NewObject) {
+					return null;
+				}
+				Double value1 = 0.0;
+				for (TLObject vorteil : vorteile(wohnung)) {
+					TLClassifier prio = (TLClassifier) vorteil.tValueByName("prioritaet");
+					value1 += (prio.getIndex() + 1) / ((double) prio.getOwner().getClassifiers().size());
+				}
+				return value1;
+			}
+		});
+		return column;
 	}
 
 	private ColumnConfiguration declareWahrheitswertColumn(TableConfiguration table) {
@@ -205,6 +231,10 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 			return (Integer) wohnung.tValueByName("zimmeranzahl");
 		}
 		return 0;
+	}
+
+	private Collection<TLObject> vorteile(TLObject wohnung) {
+		return CollectionUtil.dynamicCastView(TLObject.class, (Collection<?>) wohnung.tValueByName("vorteile"));
 	}
 
 }
