@@ -40,6 +40,7 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 		declareWahrheitswertColumn(table);
 
 		declareValue1Column(table);
+		declareValue2Column(table);
 	}
 
 	private ColumnConfiguration declareValue1Column(TableConfiguration table) {
@@ -55,12 +56,37 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 				Double value1 = 0.0;
 				for (TLObject vorteil : vorteile(wohnung)) {
 					TLClassifier prio = (TLClassifier) vorteil.tValueByName("prioritaet");
-					value1 += (prio.getIndex() + 1) / ((double) prio.getOwner().getClassifiers().size());
+					value1 += evaluate(prio);
 				}
 				return value1;
 			}
 		});
 		return column;
+	}
+
+	private ColumnConfiguration declareValue2Column(TableConfiguration table) {
+		ColumnConfiguration column = table.declareColumn("value2");
+		adaptWidth(table, "value2", "V2", "value2");
+		column.setCellStyle("text-align: right;");
+		column.setAccessor(new ReadOnlyAccessor<TLObject>() {
+			@Override
+			public Object getValue(TLObject wohnung, String property) {
+				if (wohnung == null || wohnung instanceof NewObject) {
+					return null;
+				}
+				Double value1 = 0.0;
+				for (TLObject nachteil : nachteile(wohnung)) {
+					TLClassifier prio = (TLClassifier) nachteil.tValueByName("prioritaet");
+					value1 += evaluate(prio);
+				}
+				return value1;
+			}
+		});
+		return column;
+	}
+
+	private double evaluate(TLClassifier priority) {
+		return (priority.getIndex() + 1) / ((double) priority.getOwner().getClassifiers().size());
 	}
 
 	private ColumnConfiguration declareWahrheitswertColumn(TableConfiguration table) {
@@ -235,6 +261,10 @@ public class WohnungTableConfigurationProvider extends NoDefaultColumnAdaption {
 
 	private Collection<TLObject> vorteile(TLObject wohnung) {
 		return CollectionUtil.dynamicCastView(TLObject.class, (Collection<?>) wohnung.tValueByName("vorteile"));
+	}
+
+	private Collection<TLObject> nachteile(TLObject wohnung) {
+		return CollectionUtil.dynamicCastView(TLObject.class, (Collection<?>) wohnung.tValueByName("nachteile"));
 	}
 
 }

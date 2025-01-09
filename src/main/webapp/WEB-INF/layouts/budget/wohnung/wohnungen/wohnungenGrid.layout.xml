@@ -6,7 +6,7 @@
 	template="com.top_logic.element/grid.template.xml"
 >
 	<arguments
-		defaultColumns="aktiv,bezeichnung,adresse,gesamtkosten,zimmeranzahl,flaecheProZimmer,flaeche,miete,kaltmiete,nebenkosten,zzglHeizkosten,jahresenergiebedarf,energieklasse,energiebedarf,value1,vorteile,nachteile,wahrheitswert,anbieter,anbietertricks,url"
+		defaultColumns="aktiv,bezeichnung,adresse,gesamtkosten,zimmeranzahl,flaecheProZimmer,flaeche,miete,kaltmiete,nebenkosten,zzglHeizkosten,jahresenergiebedarf,energieklasse,energiebedarf,value1,vorteile,value2,nachteile,wahrheitswert,anbieter,anbietertricks,url"
 		fixedColumns="3"
 		type="Budget:Wohnung"
 	>
